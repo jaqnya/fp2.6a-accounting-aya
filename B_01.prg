@@ -1,0 +1,25 @@
+IF LEFT(cuentas.codigo, 1) > '0'  ;
+   .AND. RIGHT(cuentas.codigo,  ;
+   17) = '-00-00-00-00-0000'
+     WAIT WINDOW  ;
+          'ESTA ES UNA CUENTA DE TIPO GENERAL, NO PUEDE SER BORRADO !'
+     RETURN
+ENDIF
+SELECT movimiento
+SET ORDER TO 2
+SEEK cuentas.codigo
+IF FOUND()
+     WAIT WINDOW  ;
+          'ESTA CUENTA FIGURA EN EL ARCH. DE MOVIMIENTOS, NO PUEDE SER BORRADO !'
+ELSE
+     SELECT cuentas
+     DELETE
+     SKIP -1
+     WAIT WINDOW  ;
+          'LA CUENTA HA SIDO BORRADA !'
+ENDIF
+SELECT movimiento
+SET ORDER TO 1
+SELECT cuentas
+RETURN
+*

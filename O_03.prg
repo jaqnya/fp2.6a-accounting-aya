@@ -1,0 +1,66 @@
+DEFINE WINDOW o_05 FROM 06, 19 TO  ;
+       16, 61 SHADOW
+ACTIVATE WINDOW o_05
+@ 00, 03 SAY 'ARCHIVOS' COLOR W+/ ;
+  B 
+@ ROW(), COL() SAY  ;
+  '      REGISTROS    ESPACIOS'  ;
+  COLOR GR+/B 
+@ 01, 00 TO 01, 40 COLOR GR+/B 
+SELECT cuentas
+@ ROW() + 1, 02 SAY  ;
+  ' CUENTAS      ' COLOR GR+/B 
+@ ROW(), 16 SAY  ;
+  TRANSFORM(RECCOUNT(),  ;
+  '9,999,999')
+@ ROW(), COL() + 3 SAY  ;
+  TRANSFORM((HEADER() + RECSIZE() *  ;
+  RECCOUNT() + 1), '99,999,999')
+SELECT movimiento
+@ ROW() + 1, 02 SAY  ;
+  ' MOVIMIENTOS ' COLOR GR+/B 
+@ ROW(), 16 SAY  ;
+  TRANSFORM(RECCOUNT(),  ;
+  '9,999,999')
+@ ROW(), COL() + 3 SAY  ;
+  TRANSFORM((HEADER() + RECSIZE() *  ;
+  RECCOUNT() + 1), '99,999,999')
+SELECT clieprov
+@ ROW() + 1, 02 SAY  ;
+  ' CLIEPROV    ' COLOR GR+/B 
+@ ROW(), 16 SAY  ;
+  TRANSFORM(RECCOUNT(),  ;
+  '9,999,999')
+@ ROW(), COL() + 3 SAY  ;
+  TRANSFORM((HEADER() + RECSIZE() *  ;
+  RECCOUNT() + 1), '99,999,999')
+SELECT lventas
+@ ROW() + 1, 02 SAY  ;
+  ' L.I.VENTAS  ' COLOR GR+/B 
+@ ROW(), 16 SAY  ;
+  TRANSFORM(RECCOUNT(),  ;
+  '9,999,999')
+@ ROW(), COL() + 3 SAY  ;
+  TRANSFORM((HEADER() + RECSIZE() *  ;
+  RECCOUNT() + 1), '99,999,999')
+SELECT lcompras
+@ ROW() + 1, 02 SAY  ;
+  ' L.I.COMPRAS ' COLOR GR+/B 
+@ ROW(), 16 SAY  ;
+  TRANSFORM(RECCOUNT(),  ;
+  '9,999,999')
+@ ROW(), COL() + 3 SAY  ;
+  TRANSFORM((HEADER() + RECSIZE() *  ;
+  RECCOUNT() + 1), '99,999,999')
+@ 07, 00 TO 07, 40 COLOR GR+/B 
+@ ROW() + 1, 03 SAY  ;
+  'ESPACIO LIBRE EN DISCO: '  ;
+  COLOR W+/B 
+@ ROW(), COL() SAY  ;
+  ALLTRIM(TRANSFORM(DISKSPACE(),  ;
+  '999,999,999')) COLOR GR+/B 
+DO presione
+DEACTIVATE WINDOW o_05
+RELEASE WINDOW o_05
+RETURN
+*

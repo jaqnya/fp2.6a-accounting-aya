@@ -1,0 +1,57 @@
+DEFINE WINDOW o_11 FROM 07, 11 TO  ;
+       12, 68 SHADOW TITLE  ;
+       ' CLASIFICACION DE DEBITOS Y CREDITOS '
+ACTIVATE WINDOW o_11
+@ 01, 03 SAY  ;
+  'ES RECOMENDABLE QUE REALIZE UNA COPIA DE SEGURIDAD'
+@ 02, 03 SAY  ;
+  '         ANTES DE EJECUTAR ESTE PROCESO !'
+? CHR(7)
+SET CURSOR OFF
+IF  .NOT. desea_cont()
+     DEACTIVATE WINDOW o_11
+     RELEASE WINDOW o_11
+     SET CURSOR ON
+     RETURN
+ENDIF
+DEACTIVATE WINDOW o_11
+RELEASE WINDOW o_11
+SET CURSOR ON
+SELECT movimiento
+USE
+SELECT 0
+auxicar = raiz +  ;
+          ALLTRIM(STR(empresas.codigo,  ;
+          2)) + '\MOVIM'
+use &auxicar index &auxicar alias MOVIMIENTOS;
+exclusive
+IF  .NOT. FLOCK()
+     WAIT WINDOW  ;
+          'ERROR !, ALGUIEN ESTA UTILIZANDO EL SISTEMA !'
+     SELECT 0
+     use &auxicar index &auxicar alias;
+MOVIMIENTOS
+     SET ORDER TO 1
+     RETURN
+ENDIF
+SET ORDER TO 1
+DEFINE WINDOW o_11 FROM 08, 10 TO  ;
+       12, 70 SHADOW
+ACTIVATE WINDOW o_11
+DO WHILE .T.
+     @ 01, 03 SAY  ;
+       'CLASIFICACION DE DEBITOS Y CREDITOS EN EL LIBRO DIARIO'
+     IF esta_corre()
+          DO o_11a
+          EXIT
+     ENDIF
+ENDDO
+DEACTIVATE WINDOW o_11
+RELEASE WINDOW o_o1
+SELECT movimiento
+USE
+SELECT 0
+use &auxicar index &auxicar alias MOVIMIENTOS
+SET ORDER TO 1
+RETURN
+*
